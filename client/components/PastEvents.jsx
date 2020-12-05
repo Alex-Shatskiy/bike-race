@@ -19,7 +19,7 @@ class PastEvents extends React.Component {
             let raceFullDate = String(new Date(event.startTime * 1000))
             let raceDate = raceFullDate.slice(0,15)
             let raceTime = raceFullDate.slice(17,21)
-            console.log(currentTime > event.startTime)
+           
            if(currentTime > event.startTime){
             return (
                 <li key={event.id} 
