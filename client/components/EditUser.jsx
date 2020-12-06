@@ -2,6 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { editUser } from '../actions/users'
 import { Redirect } from 'react-router-dom'
+import S3FileUpload from 'react-s3';
+
+const config = {
+  bucketName: 'bike-race',
+  dirName: 'photos', /* optional */
+  region: 'ap-southeast-2',
+  accessKeyId: 'AKIAJJRDTCK4DPW6E4IQ',
+  secretAccessKey: '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',
+}
 
 export class EditUser extends React.Component {
   state = {
@@ -10,6 +19,17 @@ export class EditUser extends React.Component {
     imgURL: this.props.activeUser.imgURL,
     bikeType: this.props.activeUser.bikeType,
     redirect: false
+  }
+
+
+  handleImageChange = evt =>{
+    const file = evt.target.files[0]
+    S3FileUpload
+    .uploadFile(file, config)
+    .then(data => {
+      this.setState({imgURL: data.location})
+    })
+    .catch(err => console.error(err))
   }
 
   handleChange = event => {
@@ -54,13 +74,14 @@ export class EditUser extends React.Component {
             value={this.state.email}
           />
           <br/>
-          <label htmlFor="imgURL" className='editUserLabel'>imgURL</label>
-          <input  className='editUserInput'
-            type="text"
+           <label htmlFor="imgURL">profile picture</label>
+          <input className='formInput'
+            type="file"
+            onChange={this.handleImageChange}
             name="imgURL"
-            onChange={this.handleChange}
-            value={this.state.imgURL}
-          />
+            accept="image/*"
+             />
+             
           <br/>
           <label htmlFor="bikeType" className='editUserLabel'>Bike type:</label>
           <select  className='editUserInput'
