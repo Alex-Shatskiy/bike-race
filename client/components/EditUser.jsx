@@ -4,13 +4,14 @@ import { editUser } from '../actions/users'
 import { Redirect } from 'react-router-dom'
 import S3FileUpload from 'react-s3';
 
-const config = {
-  bucketName: 'bike-race',
-  dirName: 'photos', /* optional */
-  region: 'ap-southeast-2',
-  accessKeyId: 'AKIAJJRDTCK4DPW6E4IQ',
-  secretAccessKey: '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',
-}
+
+// const config = {
+//   bucketName: 'bike-race',
+//   dirName: 'photos', /* optional */
+//   region: 'ap-southeast-2',
+//   accessKeyId: 'AKIAJJRDTCK4DPW6E4IQ',
+//   secretAccessKey: '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',
+// }
 
 export class EditUser extends React.Component {
   state = {
@@ -46,6 +47,8 @@ export class EditUser extends React.Component {
     this.setState({redirect: true})
   }
 
+
+
   render() {
     const { redirect } = this.state
     if (redirect) {
@@ -57,6 +60,9 @@ export class EditUser extends React.Component {
         <h1 className='editUserHeader'>Edit your profile, {this.props.activeUser.username}</h1>
         <div className='editUserBox'>
         <form className='editUserContainer'>
+
+        
+     
 
           <label htmlFor="username" className='editUserLabel'>Username:</label>
           <input  className='editUserInput'

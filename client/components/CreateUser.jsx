@@ -3,16 +3,11 @@ import { connect } from 'react-redux'
 import { addNewUser, changeActiveUser } from '../actions/users'
 import { Redirect } from 'react-router-dom'
 // import { Link } from 'react-router-dom'
-
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
 import S3FileUpload from 'react-s3';
 
-const config = {
-  bucketName: 'bike-race',
-  dirName: 'photos', /* optional */
-  region: 'ap-southeast-2',
-  accessKeyId: 'AKIAJJRDTCK4DPW6E4IQ',
-  secretAccessKey: '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',
-}
+
 
 export class CreateUser extends React.Component {
   state = {
@@ -55,7 +50,10 @@ export class CreateUser extends React.Component {
       })
     }
     
-    
+    handleTakePhoto = (dataUri) => {
+      this.setState({imgURL: dataUri})
+      console.log(this.state);
+    }
     
     
     
@@ -70,7 +68,9 @@ export class CreateUser extends React.Component {
         <div>
         <h1>Create Profile</h1>
         <form className='formBox' onSubmit={this.handleSubmit}>
-
+        <Camera
+      onTakePhoto = { (dataUri) => { this.handleTakePhoto(dataUri); } }
+    />
           <label htmlFor="imgURL">profile picture</label>
           <input className='formInput'
             type="file"
